@@ -1,5 +1,5 @@
 # Credits to https://github.com/puckel/docker-airflow
-version: '3.7'
+version: '3.8'
 services:
     postgres:
         image: postgres:13.2
@@ -11,6 +11,11 @@ services:
             options:
                 max-size: 10m
                 max-file: "3"
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "airflow"]
+            interval: 5s
+            retries: 5
+        restart: always
 
     webserver:
         image: puckel/docker-airflow:1.10.9
@@ -26,6 +31,7 @@ services:
                 max-file: "3"
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./config/airflow.cfg:/usr/local/airflow/airflow.cfg
         ports:
             - "8080:8080"
         command: webserver
