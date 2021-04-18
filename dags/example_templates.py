@@ -8,22 +8,24 @@ args = {
 }
 
 dag = DAG(
-    dag_id='example_variables',
+    dag_id='example_templates',
     default_args=args,
     schedule_interval="0 * * * *",
     tags=['example'],
     catchup=False
 )
 
-def print_variable():
+def print_execution_date(**kwargs):
     print("================================================")
-    print("Variable Contoh adalah:", Variable.get("Contoh"))
+    print("execution_date adalah: ", kwargs["execution_date"])
     print("================================================")
 
-cetak_variable = PythonOperator(
-    task_id='cetak_variable',
-    python_callable=print_variable,
+cetak_execution_date = PythonOperator(
+    task_id='cetak_execution_date',
+    provide_context=True,
+    python_callable=print_execution_date,
+    templates_dict={"execution_date": "{{ execution_date }}"},
     dag=dag,
 )
 
-cetak_variable
+cetak_execution_date

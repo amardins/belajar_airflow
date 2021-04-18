@@ -22,7 +22,7 @@ def print_context(ds, **kwargs):
     print(ds)
     return 'Whatever you return gets printed in the logs'
 
-run_this = PythonOperator(
+cetak_context = PythonOperator(
     task_id='print_the_context',
     provide_context=True,
     python_callable=print_context,
@@ -37,4 +37,4 @@ send_email = EmailOperator(
         dag=dag
 )
 
-run_this >> send_email
+cetak_context >> send_email
