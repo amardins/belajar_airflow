@@ -30,7 +30,7 @@ scrapping_data = PythonOperator(
 
 send_email = EmailOperator(
         task_id='send_email',
-        to='fia.digitalskola@gmail.com ',
+        to='fia.digitalskola@gmail.com',
         subject='Andi_DigitalSkola_Airflow',
         html_content=""" Daftar Orang terkaya di Indonesia - Andi Mardinsyah """,
         files=['/usr/local/airflow/list_orang_terkaya_di_indonesia.csv'],
